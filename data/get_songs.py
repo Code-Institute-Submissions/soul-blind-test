@@ -29,16 +29,17 @@ featured_artists = {
 list_of_tracks = []
 
 #loops over each artist and adds the relevant info to my list of track array 
-for artist in featured_artists:
-    tracks = sp.artist_top_tracks(featured_artists['aretha'])
+for artist, key in featured_artists.items():
+    tracks = sp.artist_top_tracks(key)
     for track in tracks["tracks"]: 
-        track_dict = {}
-        track_dict['title'] = track['name']
-        track_dict['artist'] = track['artists'][0]['name']
-        track_dict['preview_url'] = track['preview_url']
-        track_dict['album_name'] = track["album"]["name"]
-        track_dict["album_img"] = track["album"]["images"][0]
-        list_of_tracks.append(track_dict)
+        if track['preview_url'] :
+            track_dict = {}
+            track_dict['title'] = track['name']
+            track_dict['artist'] = track['artists'][0]['name']
+            track_dict['preview_url'] = track['preview_url']
+            track_dict['album_name'] = track["album"]["name"]
+            track_dict["album_img"] = track["album"]["images"][0]
+            list_of_tracks.append(track_dict)
 
 with open('data/songs.py', 'w') as f:
     f.write("songs_array={}".format(list_of_tracks))

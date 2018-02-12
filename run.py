@@ -1,7 +1,7 @@
 import os
 from data.songs import songs_array as songs_array
 
-from flask import Flask, render_template,redirect 
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -19,9 +19,11 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
     
-@app.route("/<index>")
-def play_song(index):
-    return "<audio controls='controls' autoplay><source src={} /></audio>".format(songs_array[int(index)]["preview_url"])
+
+@app.route("/<int:song_number>/")
+def play_song(song_number):
+    return "<audio controls='controls' autoplay><source src={} /></audio>".format(songs_array[song_number]["preview_url"])
+
 
 
 if __name__ == "__main__":
