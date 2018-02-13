@@ -5,6 +5,10 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
+current_game = {
+    'score' : {},
+    'songs' : []
+}
 
 def select_songs():
     '''
@@ -12,9 +16,18 @@ def select_songs():
     by creating an array of 10 random indexes. 
     '''
     return [random.randint(0, len(songs_array)) for i in range(10)]
+    
+    
+def start_game():
+    """
+    Sets the current user and current song and sets the score to an empty list
+    """
+    current_game['score'].clear()
+    songs = select_songs()
+    for song in songs:
+        current_game['songs'].append(song)
 
 # Functions to create:
-# Start the game -> gets the name of user, starts a counter for the number of rounds, redirects to the first game page. 
 # Verifies if the user found the correct title
 # Verifies if the user found the correct artiste
 # Counts the points (1 artist, 1 title, 3 both)
@@ -26,14 +39,14 @@ def select_songs():
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        songs = select_songs()
-        # current_user = request.form['username']
-        return redirect(songs[0])
+        start_game()
+        return redirect(current_game['songs'][0])
     return render_template('index.html')
 
 
 @app.route("/<int:song_number>/")
 def play_song(song_number):
+    print(current_game)
     return render_template('playing.html', song = songs_array[song_number]["preview_url"])
 
 
