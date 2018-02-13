@@ -1,0 +1,67 @@
+body, html {
+    height:100vh;
+    font-family:'Poppins', sans-serif;
+}
+
+
+/*Style for the Nav Bar*/
+nav {
+    background-color:black;
+}
+
+nav a {
+    color:#e87330;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(232, 115, 48)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+nav a:hover {
+    color:#e5c09e;
+}
+
+.navbar-brand {
+    font-family: 'Monoton', cursive;
+}
+
+
+/*Style for the Home Page*/
+.landing-page {
+    background-image: url("/static/img/mr-cup-fabien-barral-86068.jpg");
+    background-size: cover;
+	background-position: top center;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.home-form {
+    background: rgba(0,0,0,0.4);
+    padding:5% 5% 10% 5%;
+    
+    border-radius: 24px 24px 24px 24px;
+    -moz-border-radius: 24px 24px 24px 24px;
+    -webkit-border-radius: 24px 24px 24px 24px;
+
+    -webkit-box-shadow: 3px 4px 14px -1px rgba(229,192,158,0.75);
+    -moz-box-shadow: 3px 4px 14px -1px rgba(229,192,158,0.75);
+    box-shadow: 3px 4px 14px -1px rgba(229,192,158,0.75);
+}
+
+.home-form h1{
+   text-align:center;
+   font-family: 'Monoton', cursive;
+   color: #e5c09e;
+   font-size: 3em;
+}
+
+.home-form button.btn.btn-block.btn-lg{
+    background-color:#e87330;
+    font-size:1em;
+}
+
+.home-form button.btn.btn-block.btn-lg:hover{
+    background-color:#e5c09e;
+}
