@@ -1,9 +1,10 @@
 import os
 import random
 from data.songs import songs_array as songs_array
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
+
 
 def select_songs():
     '''
@@ -11,8 +12,6 @@ def select_songs():
     by creating an array of 10 random indexes. 
     '''
     return [random.randint(0, len(songs_array)) for i in range(10)]
-
-# def start_game():
 
 # Functions to create:
 # Start the game -> gets the name of user, starts a counter for the number of rounds, redirects to the first game page. 
@@ -23,8 +22,13 @@ def select_songs():
 # Ends the game -> gets the final score, stores the score in the DB, redirect to the last page
 
 
-@app.route("/")
+
+@app.route("/", methods=["GET", "POST"])
 def index():
+    if request.method == "POST":
+        songs = select_songs()
+        # current_user = request.form['username']
+        return redirect(songs[0])
     return render_template('index.html')
 
 
