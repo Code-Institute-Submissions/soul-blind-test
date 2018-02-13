@@ -1,4 +1,4 @@
-#This script allows me to create an array of songs&artists that I will randomly select for the blind test
+#This script helps me create an array of songs&artists that I will randomly select for the blind test
 
 from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy
@@ -28,7 +28,7 @@ featured_artists = {
 #This array will contain a list of the top 10 tracks for each featured artiste
 list_of_tracks = []
 
-#loops over each artist and adds the relevant info to my list of track array 
+#loops over each artist and adds the relevant info to my list of track array if they have a preview url 
 for artist, key in featured_artists.items():
     tracks = sp.artist_top_tracks(key)
     for track in tracks["tracks"]: 
