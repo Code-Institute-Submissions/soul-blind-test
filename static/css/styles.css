@@ -3,6 +3,12 @@ body, html {
     font-family:'Poppins', sans-serif;
 }
 
+h1{
+   text-align:center;
+   font-family: 'Monoton', cursive;
+   color: #e5c09e;
+   font-size: 3em;
+}
 
 /*Style for the Nav Bar*/
 nav {
@@ -50,12 +56,6 @@ nav a:hover {
     box-shadow: 3px 4px 14px -1px rgba(229,192,158,0.75);
 }
 
-.home-form h1{
-   text-align:center;
-   font-family: 'Monoton', cursive;
-   color: #e5c09e;
-   font-size: 3em;
-}
 
 .home-form button.btn.btn-block.btn-lg{
     background-color:#e87330;
@@ -64,4 +64,37 @@ nav a:hover {
 
 .home-form button.btn.btn-block.btn-lg:hover{
     background-color:#e5c09e;
+}
+
+/*Styles for the playing pages*/
+.quizz {
+    background-image:url("/static/img/swirl_pattern.png");
+    /* Background pattern from Subtle Patterns */
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:0;
+}
+
+.playing-area{
+    background-color: rgba(15, 12, 10, 0.6);
+    
+    width:100%;
+    height:100%;
+    
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+audio{
+    display:block;
+    margin:0 auto;
+}
+
+.playing-area form{
+    margin-top: 30px;
+    min-width:60%;
 }

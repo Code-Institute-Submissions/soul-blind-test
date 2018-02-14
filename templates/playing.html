@@ -1,8 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<audio controls='controls' autoplay>
-    <source src={{song}} />
-</audio>"
+
+<section class="container-fluid quizz">
+  <div class='playing-area'>
+    <h1 class="mb-5">Can you Guess ? </h1>
+    <audio controls='controls' autoplay>
+      <source src={{song}} />
+    </audio>
+  
+    <form method="POST">
+      <div class="form-row">
+        <div class="col-sm-12 col-md-6 	col-xl-5">
+          <input type="text" class="form-control" placeholder="Enter the Artist's Name" name="artist">
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-5">
+          <input type="text" class="form-control" placeholder="Enter the Title" name="title">
+        </div>
+        <div class="offset-sm-5 col-sm-2 offset-lg-0 col-lg-2">
+          <button type="submit" class="btn btn-info">Submit</button>
+        </div>
+      </div>
+    </form>
+    
+  </div>
+</section>
 
 {% endblock %}
