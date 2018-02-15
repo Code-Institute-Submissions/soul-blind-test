@@ -133,13 +133,10 @@ def increase_round_counter(player_id):
     return game.rounds_played
 
 
-# def set_points_for_round(player_id, game, round)
-    
-# def get_the_next_song(player):
-#     player_id = get_player_id(player)
-#     game_id = get_game_id(player_id)
-#     songs = get_playlist(game_id)
-#     return 
+def set_points_for_round(player_id, current_round, points):
+    game_id = get_game_id(player_id)
+    song_entry = Game_with_Songs.query.filter_by(game=game_id).filter_by(round_numb=current_round).first()
+    song_entry.points = points
 
 
 def start_playing(player_id):
@@ -185,15 +182,23 @@ def index():
 def play_song(player_id, song_number):
     #Increment the counter of rounds 
     current_round = increase_round_counter(player_id)
-    print(current_round)
-    # if request.method = "POST":
-    #     #2.Get the responses 
+
+    if request.method == "POST":
+ 
+        title_guess = request.form['title']
+        artist_guess = request.form['artist']
         
+        points = calculate_points(song_number=song_number, title_input=title_guess, artist_input=artist_guess)
+        set_points_for_round(player_id=player_id, current_round=current_round, points=points)
         
         #If the number of rounds = 10, we redirect to the result page
+        if current_round != 10:
+            game_id = get_game_id(player_id)
+            playlist = get_playlist(game_id)
+            return redirect(url_for('play_song', player_id=int(player_id), song_number=int(playlist[current_round].song)))
+        # TO DO : ADD FLASH MESSAGE FOR NEXT PAGE 
         
         #If the number of rounds !=0 we redirect to the next guess 
-        # Get the next song then redirect 
     
     
     return render_template('playing.html', song = songs_array[song_number]["preview_url"])

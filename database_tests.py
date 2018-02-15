@@ -88,6 +88,21 @@ class BaseTestCase(TestCase):
         self.assertEqual(increase_round_counter(player_id), 2)
         self.assertEqual(increase_round_counter(player_id), 3)
 
+    def test_set_points_for_round(self):
+        create_a_player('otis')
+        add_game(get_player_id('otis'))
+        player_id = get_player_id('otis')
+        game_id = get_game_id(player_id)
+        songs = [1,2]
+        add_songs_to_the_game(game_id, songs)
+        
+        set_points_for_round(game_id, 0, 1)
+        set_points_for_round(game_id, 1, 3)
+        
+        self.assertEqual(Game_with_Songs.query.filter_by(game=game_id).filter_by(round_numb=0).first().points, 1)
+        self.assertEqual(Game_with_Songs.query.filter_by(game=game_id).filter_by(round_numb=1).first().points, 3)
+
+
 
 if __name__ == '__main__':
     unittest.main()
