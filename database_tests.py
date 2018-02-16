@@ -1,5 +1,6 @@
 import unittest
 from flask.ext.testing import TestCase
+from data.songs import songs_array as songs_array
 from run import *
 
 class BaseTestCase(TestCase):
@@ -84,9 +85,27 @@ class BaseTestCase(TestCase):
         add_songs_to_the_game(game_id, songs)
         
         self.assertEqual(Game_with_Players.query.filter_by(id = game_id).first().rounds_played, 0)
-        self.assertEqual(increase_round_counter(player_id), 1)
-        self.assertEqual(increase_round_counter(player_id), 2)
-        self.assertEqual(increase_round_counter(player_id), 3)
+        increase_round_counter(player_id)
+        self.assertEqual(Game_with_Players.query.filter_by(id = game_id).first().rounds_played, 1)
+        increase_round_counter(player_id)
+        self.assertEqual(Game_with_Players.query.filter_by(id = game_id).first().rounds_played, 2)
+        increase_round_counter(player_id)
+        self.assertEqual(Game_with_Players.query.filter_by(id = game_id).first().rounds_played, 3)
+    
+    def test_get_current_round(self):
+        create_a_player('michael')
+        add_game(get_player_id('michael'))
+        player_id = get_player_id('michael')
+        game_id = get_game_id(player_id)
+        songs = [1]
+        add_songs_to_the_game(game_id, songs)
+        
+        self.assertEqual(get_current_round(player_id), 0)
+        increase_round_counter(player_id)
+        self.assertEqual(get_current_round(player_id), 1)
+        increase_round_counter(player_id)
+        self.assertEqual(get_current_round(player_id), 2)
+
 
     def test_set_points_for_round(self):
         create_a_player('otis')
@@ -101,8 +120,43 @@ class BaseTestCase(TestCase):
         
         self.assertEqual(Game_with_Songs.query.filter_by(game=game_id).filter_by(round_numb=0).first().points, 1)
         self.assertEqual(Game_with_Songs.query.filter_by(game=game_id).filter_by(round_numb=1).first().points, 3)
-
-
+        
+    def test_get_total_points(self):
+        create_a_player('sam')
+        add_game(get_player_id('sam'))
+        player_id = get_player_id('sam')
+        game_id = get_game_id(player_id)
+        songs = [1,2]
+        add_songs_to_the_game(game_id, songs)
+        
+        set_points_for_round(game_id, 0, 1)
+        self.assertEqual(get_total_points(player_id), 1)
+         
+        set_points_for_round(game_id, 1, 3)
+        self.assertEqual(get_total_points(player_id), 4)
+        
+        
+    def test_get_result_data(self):
+        create_a_player('sam')
+        add_game(get_player_id('sam'))
+        player_id = get_player_id('sam')
+        game_id = get_game_id(player_id)
+        songs = [1,2,3,4]
+        add_songs_to_the_game(game_id, songs)
+        
+        
+        set_points_for_round(game_id, 0, 1)
+        set_points_for_round(game_id, 1, 3)
+        
+        final_playlist = get_result_data(game_id)
+        
+        self.assertEqual(len(final_playlist), 4)
+        self.assertEqual(final_playlist[0]['points'], 1)
+        self.assertEqual(final_playlist[3]['points'], 0)
+        self.assertEqual(final_playlist[1]['title'], songs_array[2]['title'])
+        self.assertEqual(final_playlist[1]['artist'], songs_array[2]['artist'])
+        self.assertEqual(final_playlist[2]['album_img'], songs_array[3]['album_img']['url'])
+        
 
 if __name__ == '__main__':
     unittest.main()

@@ -15,6 +15,7 @@ db = SQLAlchemy(app)
 
 # Set up the Database with on table for the player, one that link the player to a game and one that links a game to songs and scores. 
 class Player(db.Model):
+    # This table keeps record of users and they id
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     
@@ -23,6 +24,8 @@ class Player(db.Model):
     
     
 class Game_with_Players(db.Model):
+    # This table keeps record of which player played which game (from their id), 
+    # and how many rounds in the game the player have played
     id = db.Column(db.Integer, primary_key = True)
     player = db.Column(db.Integer, db.ForeignKey(Player.id), nullable=False)
     rounds_played = db.Column(db.Integer, nullable=False)
@@ -32,6 +35,8 @@ class Game_with_Players(db.Model):
         self.rounds_played = rounds_played
     
 class Game_with_Songs(db.Model):
+    # This table keeps a record of the songs to be guessed for each round of the game, 
+    # and is updated with the points won by the player as he plays
     id = db.Column(db.Integer, primary_key = True)
     game = db.Column(db.Integer, db.ForeignKey(Game_with_Players.id), nullable=False)
     song = db.Column(db.Integer, nullable = False)
@@ -52,7 +57,7 @@ def select_songs():
     This functions selects the 10 random songs that the player will have to guess
     by creating an array of 10 random indexes. 
     '''
-    return [random.randint(0, len(songs_array)) for i in range(10)]
+    return [random.randint(0, len(songs_array)-1) for i in range(10)]
 
 def answer_is_correct(user_input, song_number, to_check):
     '''
@@ -62,6 +67,11 @@ def answer_is_correct(user_input, song_number, to_check):
     
 
 def calculate_points(song_number, title_input, artist_input):
+    '''
+    This function takes the user's responses for artist and title and a song number 
+    and counts the points won by the player depending of if he's right or wrong.
+    '''
+    
     #Handle the case when the user doesn't answer one or two fields
     if not title_input:
         title_input = 'wrong'
@@ -118,6 +128,9 @@ def add_songs_to_the_game(game_id, songs):
     
 
 def get_playlist(game_id):
+    '''
+    This function returns an array of the entries songs to be played in the selected game
+    '''
     return Game_with_Songs.query.filter_by(game = game_id).all()
 
 
@@ -132,11 +145,35 @@ def increase_round_counter(player_id):
     db.session.commit()
     return game.rounds_played
 
+def get_current_round(player_id):
+    '''
+    This function will help us increase the rounds counter in the Game_with_Players table, 
+    so we know which song to present next to the player
+    '''
+    game_id = get_game_id(player_id)
+    return Game_with_Players.query.filter_by(id = game_id).first().rounds_played
 
 def set_points_for_round(player_id, current_round, points):
+    '''
+    This function updates the table with the points won by the player for the selected round. 
+    '''
     game_id = get_game_id(player_id)
     song_entry = Game_with_Songs.query.filter_by(game=game_id).filter_by(round_numb=current_round).first()
     song_entry.points = points
+
+
+def get_total_points(player_id):
+    '''
+    This function returns the sum of points won by the player in his current game
+    '''
+    game_id = get_game_id(player_id)
+    game_entries = Game_with_Songs.query.filter_by(game=game_id).all()
+    
+    total_points = 0
+    for song in game_entries:
+        total_points += song.points
+    
+    return total_points
 
 
 def start_playing(player_id):
@@ -144,7 +181,6 @@ def start_playing(player_id):
     This function starts a new game by creating a new game associated with the user, 
     selects all the songs for this game and sets the number of rounds to 0.
     '''
-    
     #Create a new game associated with the user
     add_game(player_id)
     
@@ -155,14 +191,27 @@ def start_playing(player_id):
     songs = select_songs()
     add_songs_to_the_game(game_id,songs)    
         
+def get_result_data(game_id):
+    playlist = get_playlist(game_id)
+    playlist_all_info = []
+    for song_entry in playlist:
+        song = {
+            'title' : songs_array[song_entry.id]['title'],
+            'artist' : songs_array[song_entry.id]['artist'],
+            'album_img' : songs_array[song_entry.id]['album_img']['url'],
+            'points' : Game_with_Songs.query.filter_by(game = game_id).filter_by(song = song_entry.id).first().points
+        }
+        
+        playlist_all_info.append(song)
 
-# ROUTES
+    return playlist_all_info
+
+#FLASK ROUTES FUNCTIONS
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         username = request.form['username']
-        
         #verify if the user entered a name
         if username:
             if not Player.query.filter_by(username = username).first():
@@ -181,27 +230,39 @@ def index():
 @app.route("/<player_id>/<int:song_number>/", methods=["GET", "POST"])
 def play_song(player_id, song_number):
     #Increment the counter of rounds 
-    current_round = increase_round_counter(player_id)
+    if request.method == "GET":
+        current_round = get_current_round(player_id)
+        total_points = get_total_points(player_id)
+
 
     if request.method == "POST":
- 
         title_guess = request.form['title']
         artist_guess = request.form['artist']
         
         points = calculate_points(song_number=song_number, title_input=title_guess, artist_input=artist_guess)
         set_points_for_round(player_id=player_id, current_round=current_round, points=points)
+        increase_round_counter(player_id)
         
-        #If the number of rounds = 10, we redirect to the result page
-        if current_round != 10:
+        if current_round <11:
             game_id = get_game_id(player_id)
             playlist = get_playlist(game_id)
             return redirect(url_for('play_song', player_id=int(player_id), song_number=int(playlist[current_round].song)))
-        # TO DO : ADD FLASH MESSAGE FOR NEXT PAGE 
         
-        #If the number of rounds !=0 we redirect to the next guess 
+        #If the number of rounds is 10, we redirect to the result page 
+        else: 
+            game_id = get_game_id(player_id)
+            playlist_ids = get_playlist(game_id)
+
+            
+                
+            return redirect(url_for('result', player_id=int(player_id), playlist_all_info=playlist_all_info, total_points=total_points))
     
-    
-    return render_template('playing.html', song = songs_array[song_number]["preview_url"])
+    return render_template('playing.html', song = songs_array[song_number]["preview_url"], current_round=current_round, total_points=total_points)
+
+
+@app.route('/<player_id>/result/')
+def result(player_id):
+    return render_template('result.html', player_id=player_id)
 
 
 if __name__ == "__main__":
