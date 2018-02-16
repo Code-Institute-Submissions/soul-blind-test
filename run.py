@@ -196,10 +196,10 @@ def get_result_data(game_id):
     playlist_all_info = []
     for song_entry in playlist:
         song = {
-            'title' : songs_array[song_entry.id]['title'],
-            'artist' : songs_array[song_entry.id]['artist'],
-            'album_img' : songs_array[song_entry.id]['album_img']['url'],
-            'points' : Game_with_Songs.query.filter_by(game = game_id).filter_by(song = song_entry.id).first().points
+            'title' : songs_array[song_entry.song]['title'],
+            'artist' : songs_array[song_entry.song]['artist'],
+            'album_img' : songs_array[song_entry.song]['album_img']['url'],
+            'points' : Game_with_Songs.query.filter_by(game = game_id).filter_by(song = song_entry.song).first().points
         }
         
         playlist_all_info.append(song)
@@ -230,20 +230,17 @@ def index():
 @app.route("/<player_id>/<int:song_number>/", methods=["GET", "POST"])
 def play_song(player_id, song_number):
     #Increment the counter of rounds 
-    if request.method == "GET":
-        current_round = get_current_round(player_id)
-        total_points = get_total_points(player_id)
-
+    current_round = get_current_round(player_id)
+    total_points = get_total_points(player_id)
 
     if request.method == "POST":
         title_guess = request.form['title']
         artist_guess = request.form['artist']
         
-        points = calculate_points(song_number=song_number, title_input=title_guess, artist_input=artist_guess)
-        set_points_for_round(player_id=player_id, current_round=current_round, points=points)
-        increase_round_counter(player_id)
-        
-        if current_round <11:
+        if current_round <9:
+            points = calculate_points(song_number=song_number, title_input=title_guess, artist_input=artist_guess)
+            set_points_for_round(player_id=player_id, current_round=current_round, points=points)
+            increase_round_counter(player_id)
             game_id = get_game_id(player_id)
             playlist = get_playlist(game_id)
             return redirect(url_for('play_song', player_id=int(player_id), song_number=int(playlist[current_round].song)))
@@ -251,18 +248,17 @@ def play_song(player_id, song_number):
         #If the number of rounds is 10, we redirect to the result page 
         else: 
             game_id = get_game_id(player_id)
-            playlist_ids = get_playlist(game_id)
-
-            
-                
-            return redirect(url_for('result', player_id=int(player_id), playlist_all_info=playlist_all_info, total_points=total_points))
+            return redirect(url_for('result', player_id=int(player_id)))
     
     return render_template('playing.html', song = songs_array[song_number]["preview_url"], current_round=current_round, total_points=total_points)
 
 
 @app.route('/<player_id>/result/')
 def result(player_id):
-    return render_template('result.html', player_id=player_id)
+    game_id = get_game_id(player_id)
+    result_data = get_result_data(player_id)
+    total_points = get_total_points(player_id)
+    return render_template('result.html', player_id=player_id, result_data=result_data, total_points=total_points)
 
 
 if __name__ == "__main__":

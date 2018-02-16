@@ -1,3 +1,4 @@
+/*Shared Styles*/
 body, html {
     height:100vh;
     font-family:'Poppins', sans-serif;
@@ -9,6 +10,39 @@ h1{
    color: #e5c09e;
    font-size: 3em;
 }
+
+hr {
+  border: 0;
+  height: 1px; 
+  clear:both;
+  display:block;
+  width: 10%;               
+  background-color:#FFFF00;
+  background-image: -webkit-linear-gradient(left, #ffffff, #e5c09e, #ffffff);
+  background-image: -moz-linear-gradient(left, #ffffff, #e5c09e, #ffffff);
+  background-image: -ms-linear-gradient(left, #ffffff, #e5c09e, #ffffff);
+  background-image: -o-linear-gradient(left, #ffffff, #e5c09e, #ffffff); 
+}
+
+button.btn.btn-block{
+    background-color:#e87330;
+    font-size:1em;
+}
+
+button.btn.btn-block:hover{
+    background-color:#e5c09e;
+}
+
+.swirling-background {
+    background-image:url("/static/img/swirl_pattern.png");
+    /* Background pattern from Subtle Patterns */
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:0;
+}
+
 
 /*Style for the Nav Bar*/
 nav {
@@ -57,25 +91,9 @@ nav a:hover {
 }
 
 
-.home-form button.btn.btn-block.btn-lg{
-    background-color:#e87330;
-    font-size:1em;
-}
-
-.home-form button.btn.btn-block.btn-lg:hover{
-    background-color:#e5c09e;
-}
 
 /*Styles for the playing pages*/
-.quizz {
-    background-image:url("/static/img/swirl_pattern.png");
-    /* Background pattern from Subtle Patterns */
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:0;
-}
+
 
 .playing-area{
     background-color: rgba(15, 12, 10, 0.6);
@@ -89,12 +107,52 @@ nav a:hover {
     align-items:center;
 }
 
-audio{
+.playing-area h1{
+    color:#e87330;
+    margin-bottom:0;
+}
+
+.playing-area h4{
+    color:#e5c09e;
+    text-align:center;
+}
+
+.playing-area audio{
     display:block;
-    margin:0 auto;
+    margin: 0 auto;
 }
 
 .playing-area form{
-    margin-top: 30px;
     min-width:60%;
+    margin-top:1.5rem;
 }
+
+
+
+/*Result Page*/
+
+.result-area{
+    background-color: rgba(246, 101, 7, 0.4);
+    
+    width:100%;
+    height:100%;
+    
+    /*display:flex;*/
+    /*flex-direction:row;*/
+    /*flex-wrap:wrap;*/
+    /*justify-content:center;*/
+    /*align-items:center;*/
+}
+
+.result-area .user-score, .result-area .list-unstyled{
+    padding:20px;
+    margin:20px;
+    
+    background: rgba(255,255,255,0.2);
+}
+
+.result-area img {
+    width:64px;
+    height:64px;
+}
+

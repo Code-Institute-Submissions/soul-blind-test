@@ -2,13 +2,16 @@
 
 {% block content %}
 
-<section class="container-fluid quizz">
+<section class="container-fluid swirling-background">
   <div class='playing-area'>
-    <h1 class="mb-5">Can you Guess ? </h1>
+    <h1>Can you Guess ?</h1>
+    <hr>
+    <h4>Round: {{current_round + 1}}/10</h4>
+    <h4>Points: {{total_points}}</h4>
+    <hr>
     <audio controls='controls' autoplay>
       <source src={{song}} />
     </audio>
-  
     <form method="POST">
       <div class="form-row">
         <div class="col-sm-12 col-md-6 	col-xl-5">
@@ -18,7 +21,7 @@
           <input type="text" class="form-control" placeholder="Enter the Title" name="title">
         </div>
         <div class="offset-sm-5 col-sm-2 offset-lg-0 col-lg-2">
-          <button type="submit" class="btn btn-info">Submit</button>
+          <button type="submit" class="btn btn-block">Submit</button>
         </div>
       </div>
     </form>
