@@ -243,7 +243,7 @@ def play_song(player_id, song_number):
             increase_round_counter(player_id)
             game_id = get_game_id(player_id)
             playlist = get_playlist(game_id)
-            return redirect(url_for('play_song', player_id=int(player_id), song_number=int(playlist[current_round].song)))
+            return redirect(url_for('play_song', player_id=int(player_id), song_number=int(playlist[current_round+1].song)))
         
         #If the number of rounds is 10, we redirect to the result page 
         else: 
