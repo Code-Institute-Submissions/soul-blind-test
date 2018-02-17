@@ -1,14 +1,73 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
 /*Shared Styles*/
-body, html {
-    height:100vh;
-    font-family:'Poppins', sans-serif;
+html {
+   margin: 0px;
+   height: 100%;
+   width: 100%;
+}
+
+body {
+   margin: 0px;
+   min-height: 100%;
+   min-width: 100%;
+   font-family:'Poppins', sans-serif;
 }
 
 h1{
    text-align:center;
    font-family: 'Monoton', cursive;
-   color: #e5c09e;
+   color: #e87330;
    font-size: 3em;
+   margin-bottom:0;
 }
 
 hr {
@@ -24,23 +83,21 @@ hr {
   background-image: -o-linear-gradient(left, #ffffff, #e5c09e, #ffffff); 
 }
 
-button.btn.btn-block{
+button.btn{
     background-color:#e87330;
     font-size:1em;
 }
 
-button.btn.btn-block:hover{
+button.btn:hover{
     background-color:#e5c09e;
 }
 
 .swirling-background {
     background-image:url("/static/img/swirl_pattern.png");
     /* Background pattern from Subtle Patterns */
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    min-height:100%;
     padding:0;
+    margin-top:20px;
 }
 
 
@@ -71,10 +128,7 @@ nav a:hover {
     background-image: url("/static/img/mr-cup-fabien-barral-86068.jpg");
     background-size: cover;
 	background-position: top center;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    min-height:100vh;
 }
 
 .home-form {
@@ -97,19 +151,7 @@ nav a:hover {
 
 .playing-area{
     background-color: rgba(15, 12, 10, 0.6);
-    
-    width:100%;
-    height:100%;
-    
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-}
-
-.playing-area h1{
-    color:#e87330;
-    margin-bottom:0;
+    min-height:100vh;
 }
 
 .playing-area h4{
@@ -123,8 +165,8 @@ nav a:hover {
 }
 
 .playing-area form{
-    min-width:60%;
     margin-top:1.5rem;
+    min-width:60%;
 }
 
 
@@ -133,26 +175,43 @@ nav a:hover {
 
 .result-area{
     background-color: rgba(246, 101, 7, 0.4);
-    
-    width:100%;
-    height:100%;
-    
-    /*display:flex;*/
-    /*flex-direction:row;*/
-    /*flex-wrap:wrap;*/
-    /*justify-content:center;*/
-    /*align-items:center;*/
+    min-height:100vh;
+    margin:0;
 }
 
-.result-area .user-score, .result-area .list-unstyled{
-    padding:20px;
-    margin:20px;
-    
-    background: rgba(255,255,255,0.2);
+.result-area .user-score {
+    margin-top:70px;
+    text-align:center;
+}
+
+.result-area .list-group{
+    margin-top:1.5rem;
+    margin-bottom:1.5rem;
+}
+
+.result-area .list-group .list-group-item{
+    background: rgba(255,255,255,0.7);
 }
 
 .result-area img {
-    width:64px;
-    height:64px;
+    width:50px;
+    height:50px;
 }
 
+.result-area h2{
+    font-family: 'Monoton', cursive;
+    font-size:2.3rem;
+    letter-spacing: 2px;
+    margin-bottom:1.5rem;
+    text-align:center;
+}
+
+.result-area h3{
+    letter-spacing: 2px;
+    margin-bottom:1.5rem;
+    font-size:1.2rem;
+}
+
+.result-area .btn{
+    margin:2px;
+}

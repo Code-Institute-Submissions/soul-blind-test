@@ -1,44 +1,42 @@
 {% extends 'base.html' %} 
 
 {% block content %}
-<section class="container-fluid swirling-background">
-    <div class="result-area d-flex p-2 flex-sm-column flex-md-row justify-content-center align-items-center">
-        <div class='user-score d-flex p-2 flex-column justify-content-center align-items-center rounded w-25 h-50'>
-            
+<section class="container-fluid swirling-background d-flex">
+    <div class="result-area row justify-content-md-center align-items-center">
+        <div class='col-12 user-score d-flex flex-column'>
+                
             {% if total_points==0 %}
-                <h2>Ouch... You need some training</h2>
+                <h2 class='text-danger'>Ouch... You need some more training</h2>
             {% elif total_points<10 %}
-                <h2>You should try again...</h2>
+                <h2 class='text-warning'>You should try again...</h2>
             {% elif total_points<20 %}
-                <h2>Awesome!</h2>
+                <h2 class='text-success'>Awesome!</h2>
             {% elif total_points>20 %}
-                <h2>You're the best !</h2>
+                <h2 class='text-success'>You're the best !</h2>
             {% endif %}
             
-            <h3>Number of points {{total_points}}</h2>
+            <h3>Number of points: <strong>{{total_points}}</strong></h3>
             
-            <button class='btn btn-block'>Go to the Leader Board</button>
-            <button class='btn btn-block'>Play Again</button>
+            <button class='btn btn-lg'>Go to the Leader Board</button>
+            <button class='btn btn-lg'>Play Again</button>
             
         </div>
-        
-    <ul class="list-unstyled rounded w-25 h-50">
-        
-        {% for song in result_data %}
-        
-        <li class="media">
-            <img class="d-flex mr-3" src="{{song.album_img}}" alt="{{'album from {}'.format(song.artist)}}">
-            <div class="media-body">
-                <h5 class="mt-0 mb-1">{{song.title}}</h5>
-                song.artist
-            </div>
-        </li>
-        
-        {% endfor %}
-    </ul>
-
-    </div>
+        <div class='col-12'>
+            <ul class="list-group rounded">
+                {% for song in result_data %}
+                
+                <li class="list-group-item">
+                    <div class='media'>
+                        <img class="d-flex mr-3" src="{{song.album_img}}" alt="{{'album from {}'.format(song.artist)}}">
+                        <div class="media-body">
+                            <h6 class="mt-0 mb-1">{{song.title}}</h5>
+                            {{song.artist}}
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
 </section>
-
 
 {% endblock %}
