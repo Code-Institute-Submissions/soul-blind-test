@@ -3,7 +3,7 @@
 {% block content %}
 <section class="container-fluid swirling-background d-flex">
     <div class="result-area row justify-content-md-center align-items-center">
-        <div class='col-12 user-score d-flex flex-column'>
+        <div class='col-12 col-md-7 user-score d-flex flex-column'>
                 
             {% if total_points==0 %}
                 <h2 class='text-danger'>Ouch... You need some more training</h2>
@@ -17,11 +17,11 @@
             
             <h3>Number of points: <strong>{{total_points}}</strong></h3>
             
-            <button class='btn btn-lg'>Go to the Leader Board</button>
-            <button class='btn btn-lg'>Play Again</button>
+            <button class='btn btn-lg btn-result'>Go to the Leader Board</button>
+            <button class='btn btn-lg btn-result'>Play Again</button>
             
         </div>
-        <div class='col-12'>
+        <div class='col-xs-12 col-md-6'>
             <ul class="list-group rounded">
                 {% for song in result_data %}
                 
