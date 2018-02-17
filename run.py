@@ -256,9 +256,13 @@ def play_song(player_id, song_number):
 @app.route('/<player_id>/result/')
 def result(player_id):
     game_id = get_game_id(player_id)
-    result_data = get_result_data(player_id)
+    result_data = get_result_data(game_id)
     total_points = get_total_points(player_id)
     return render_template('result.html', player_id=player_id, result_data=result_data, total_points=total_points)
+
+@app.route("/contact/")
+def contact():
+    return render_template('contact.html')
 
 
 if __name__ == "__main__":

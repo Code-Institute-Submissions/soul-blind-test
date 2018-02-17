@@ -96,10 +96,14 @@ button.btn:hover{
     background-image:url("/static/img/swirl_pattern.png");
     /* Background pattern from Subtle Patterns */
     min-height:100%;
-    padding:0;
+    min-width:100%;
     margin-top:20px;
 }
 
+.container-fluid{
+    padding-right:0;
+    padding-left:0;
+}
 
 nav, footer {
     background-color:black;
@@ -140,7 +144,10 @@ footer.footer {
     background-size: cover;
 	background-position: top center;
     min-height:100vh;
+    padding-right:0;
+    padding-left:0;
 }
+
 
 .landing-page h1{
     color: #e5c09e;
@@ -162,7 +169,6 @@ footer.footer {
 
 
 /*Styles for the playing pages*/
-
 
 .playing-area{
     background-color: rgba(15, 12, 10, 0.6);
@@ -218,6 +224,7 @@ footer.footer {
     font-family: 'Monoton', cursive;
     font-size:2.3rem;
     letter-spacing: 2px;
+    padding:5px;
     margin-bottom:1.5rem;
     text-align:center;
 }
@@ -228,7 +235,35 @@ footer.footer {
     font-size:1.2rem;
 }
 
+.result-area h3 span{
+    font-weight:700;
+}
+
+.result-area h6 {
+    font-weight:700;
+}
 
 .result-area .btn-result{
     margin: 2px auto;
 }
+
+
+/*Contact Page*/
+.contact-area{
+    min-height:100vh;
+    color:#e87330;
+    font-weight:700;
+}
+
+.contact-area .form-area{
+    padding:2rem;
+    box-sizing:border-box;
+}
+
+.contact-area h2{
+    font-family: 'Monoton', cursive;
+    font-size:2.3rem;
+    margin-top:1.5rem;
+}
+
+    
