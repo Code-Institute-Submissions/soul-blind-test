@@ -321,6 +321,19 @@ def leaderboard():
 def about():
     return render_template('about.html')
 
+
+#The route below redirects the user to the index page if he tries to access his user page
+@app.route('/<player_id>/')
+def player_redirect(player_id):
+    return redirect(url_for('index'))
+
+#The route below handles 404
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+    
+
+
 if __name__ == "__main__":
     db.create_all()
     app.run(host=os.environ.get('IP'),
