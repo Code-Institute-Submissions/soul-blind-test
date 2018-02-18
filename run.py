@@ -317,6 +317,10 @@ def leaderboard():
     return render_template('leaderboard.html', top_10=enumerate(top_10))
 
 
+@app.route('/about/')
+def about():
+    return render_template('about.html')
+
 if __name__ == "__main__":
     db.create_all()
     app.run(host=os.environ.get('IP'),
