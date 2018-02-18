@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container-fluid swirling-background">
+  <div class="row leaderboard-area flex-column align-items-center justify-content-center flex-wrap">
+    <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-group">
+            {% for index, player in top_10 %}
+            <li class="list-group-item flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><span>{{ index +1}}</span> {{player.name}}</h5>
+                </div>
+                <p class="mb-1">{{player.points}} points</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+</div>
+{% endblock %}

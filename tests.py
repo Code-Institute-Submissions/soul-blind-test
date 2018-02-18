@@ -58,3 +58,6 @@ class Test_blind_test(unittest.TestCase):
         
         # 0 points if both the title and the artist are wrong 
         self.assertEqual(calculate_points(song_number, None, None), 0)
+
+if __name__ == '__main__':
+    unittest.main()

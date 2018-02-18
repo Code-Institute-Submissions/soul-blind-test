@@ -115,8 +115,8 @@ class BaseTestCase(TestCase):
         songs = [1,2]
         add_songs_to_the_game(game_id, songs)
         
-        set_points_for_round(game_id, 0, 1)
-        set_points_for_round(game_id, 1, 3)
+        set_points_for_round(player_id, 0, 1)
+        set_points_for_round(player_id, 1, 3)
         
         self.assertEqual(Game_with_Songs.query.filter_by(game=game_id).filter_by(round_numb=0).first().points, 1)
         self.assertEqual(Game_with_Songs.query.filter_by(game=game_id).filter_by(round_numb=1).first().points, 3)
@@ -129,11 +129,11 @@ class BaseTestCase(TestCase):
         songs = [1,2]
         add_songs_to_the_game(game_id, songs)
         
-        set_points_for_round(game_id, 0, 1)
-        self.assertEqual(get_total_points(player_id), 1)
+        set_points_for_round(player_id, 0, 1)
+        self.assertEqual(get_total_points(game_id), 1)
          
-        set_points_for_round(game_id, 1, 3)
-        self.assertEqual(get_total_points(player_id), 4)
+        set_points_for_round(player_id, 1, 3)
+        self.assertEqual(get_total_points(game_id), 4)
         
         
     def test_get_result_data(self):
@@ -145,8 +145,8 @@ class BaseTestCase(TestCase):
         add_songs_to_the_game(game_id, songs)
         
         
-        set_points_for_round(game_id, 0, 1)
-        set_points_for_round(game_id, 1, 3)
+        set_points_for_round(player_id, 0, 1)
+        set_points_for_round(player_id, 1, 3)
         
         final_playlist = get_result_data(game_id)
         
@@ -157,6 +157,49 @@ class BaseTestCase(TestCase):
         self.assertEqual(final_playlist[1]['artist'], songs_array[2]['artist'])
         self.assertEqual(final_playlist[2]['album_img'], songs_array[3]['album_img']['url'])
         
-
+    def test_get_all_user_games_id(self):
+        create_a_player('etta')
+        player_id = get_player_id('etta')
+        add_game(player_id)
+        self.assertEqual(get_all_user_games_id(player_id), [1])
+        add_game(player_id)
+        self.assertEqual(get_all_user_games_id(player_id), [1,2])
+        add_game(player_id)
+        self.assertEqual(get_all_user_games_id(player_id), [1,2,3])
+        
+        
+    def test_get_summary_points(self):
+        create_a_player('sam')
+        player_id = get_player_id('sam')
+        
+        add_game(player_id)
+        game_id = get_game_id(player_id)
+        songs = [1,2]
+        add_songs_to_the_game(game_id, songs)
+        set_points_for_round(player_id, 0, 1)
+        set_points_for_round(player_id, 1, 3)
+        
+        self.assertEqual(get_summary_points(1),4)
+        
+        add_game(player_id)
+        game_id = get_game_id(player_id)
+        songs = [1,2]
+        add_songs_to_the_game(game_id, songs)
+        set_points_for_round(player_id, 0, 3)
+        set_points_for_round(player_id, 1, 0)
+        
+        self.assertEqual(get_summary_points(1), 7)
+        
+    def test_get_all_users(self):
+        create_a_player('curtis')
+        self.assertEqual(get_all_users(), [1])
+        
+        create_a_player('percy')
+        self.assertEqual(get_all_users(), [1,2])
+        
+        create_a_player('jackie')
+        self.assertEqual(get_all_users(), [1,2,3])
+        
+        
 if __name__ == '__main__':
     unittest.main()

@@ -162,11 +162,10 @@ def set_points_for_round(player_id, current_round, points):
     song_entry.points = points
 
 
-def get_total_points(player_id):
+def get_total_points(game_id):
     '''
-    This function returns the sum of points won by the player in his current game
+    This function returns the sum of points won by the player the selected game
     '''
-    game_id = get_game_id(player_id)
     game_entries = Game_with_Songs.query.filter_by(game=game_id).all()
     
     total_points = 0
@@ -192,6 +191,9 @@ def start_playing(player_id):
     add_songs_to_the_game(game_id,songs)    
         
 def get_result_data(game_id):
+    '''
+    This functions creates the summary of the last game to be shows on the result page
+    '''
     playlist = get_playlist(game_id)
     playlist_all_info = []
     for song_entry in playlist:
@@ -205,6 +207,39 @@ def get_result_data(game_id):
         playlist_all_info.append(song)
 
     return playlist_all_info
+    
+def get_all_user_games_id(player_id):
+    '''
+    This function returns a array with all the ids of games played by the user
+    
+    '''
+    all_games = Game_with_Players.query.filter_by(player=player_id).all()
+    games_id = []
+    for game in all_games:
+        games_id.append(game.id)
+    return games_id
+    
+def get_summary_points(player_id):
+    '''
+    This function returns the sum of all points won by one user
+    '''
+    all_games = get_all_user_games_id(player_id)
+    all_points = 0
+    
+    for game in all_games:
+        all_points += get_total_points(game) 
+    
+    return all_points
+
+def get_all_users():
+    '''
+    This function returns a list with all the users's ids 
+    '''
+    users_ids = []
+    for player in Player.query.all():
+        users_ids.append(player.id)
+    return users_ids
+        
 
 #FLASK ROUTES FUNCTIONS
 
@@ -231,7 +266,8 @@ def index():
 def play_song(player_id, song_number):
     #Increment the counter of rounds 
     current_round = get_current_round(player_id)
-    total_points = get_total_points(player_id)
+    game_id = get_game_id(player_id)
+    total_points = get_total_points(game_id)
 
     if request.method == "POST":
         title_guess = request.form['title']
@@ -257,12 +293,28 @@ def play_song(player_id, song_number):
 def result(player_id):
     game_id = get_game_id(player_id)
     result_data = get_result_data(game_id)
-    total_points = get_total_points(player_id)
+    total_points = get_total_points(game_id)
     return render_template('result.html', player_id=player_id, result_data=result_data, total_points=total_points)
 
 @app.route("/contact/")
 def contact():
     return render_template('contact.html')
+    
+@app.route("/leaderboard/")
+def leaderboard():
+    all_users_ids = get_all_users()
+    leaderboard_info = []
+    
+    for user in all_users_ids:
+        user_points = {
+            'name': Player.query.filter_by(id = user).first().username,
+            'points': get_summary_points(user)
+        }
+        leaderboard_info.append(user_points)
+    
+    top_10 = sorted(leaderboard_info, key=lambda user: user['points'], reverse=True)[:10]
+    
+    return render_template('leaderboard.html', top_10=enumerate(top_10))
 
 
 if __name__ == "__main__":
