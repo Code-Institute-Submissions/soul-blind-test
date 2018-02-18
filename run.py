@@ -337,5 +337,4 @@ def page_not_found(e):
 if __name__ == "__main__":
     db.create_all()
     app.run(host=os.environ.get('IP'),
-            port=int(os.environ.get('PORT')),
-            debug=True)
+            port=int(os.environ.get('PORT')))
