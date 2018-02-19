@@ -50,6 +50,7 @@ The user can also view the leaderboard.
 ## Testing
 - The functions related to the database are tested in database_test.py
 - The other python functions are tested in tests.py
+- Documentation for the user testing can be found there : [User Tests](https://github.com/mathilde206/soul-blind-test/blob/master/user_testing.pdf)
 
 ## Contributing
 ### Getting the code up and running
