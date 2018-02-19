@@ -296,7 +296,7 @@ def result(player_id):
     total_points = get_total_points(game_id)
     return render_template('result.html', player_id=player_id, result_data=result_data, total_points=total_points)
 
-@app.route("/contact/")
+@app.route("/contact/", methods=["GET", "POST"])
 def contact():
     return render_template('contact.html')
     

@@ -17,6 +17,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{{url_for('static', filename='css/styles.css')}}" rel="stylesheet">
+    
 
   </head>
   <body>
@@ -48,7 +49,7 @@
           <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
             <ul class="list-inline mb-2">
               <li class="list-inline-item">
-                <a href="#">About</a>
+                <a href="{{url_for('about')}}">About</a>
               </li>
               <li class="list-inline-item">&sdot;</li>
               <li class="list-inline-item">
@@ -81,11 +82,8 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="{{url_for('static', filename='vendor/jquery/jquery.min.js')}}" ""></script>
-    <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js')}}" ""></script>
-
-    <!-- Custom scripts for this template -->
-    <script src={{url_for('static', filename='js/blindtest.js')}}></script>
+    <script src="{{url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>
 
   </body>
 

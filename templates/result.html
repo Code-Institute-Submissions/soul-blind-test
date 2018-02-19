@@ -17,8 +17,8 @@
             
             <h3>Number of points: <span>{{total_points}}<span></h3>
             
-            <button class='btn btn-lg btn-result'>Go to the Leader Board</button>
-            <button class='btn btn-lg btn-result'>Play Again</button>
+            <a href="{{url_for('leaderboard')}}"><button class='btn btn-lg btn-result'>Go to the Leader Board</button></a>
+            <a href="{{url_for('index')}}"><button class='btn btn-lg btn-result'>Play Again</button></a>
             
         </div>
         <div class='col-xs-12 col-md-6'>

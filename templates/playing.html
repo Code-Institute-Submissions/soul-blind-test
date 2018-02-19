@@ -21,12 +21,16 @@
           <input type="text" class="form-control" placeholder="Enter the Title" name="title">
         </div>
         <div class="offset-sm-5 col-sm-2 offset-lg-0 col-lg-2">
-          <button type="submit" class="btn btn-block">Submit</button>
+          <button type="submit" class="btn btn-block" id='submitGuess'>Submit</button>
         </div>
       </div>
     </form>
     
   </div>
 </section>
+
+    <!-- Custom scripts for this template -->
+    <script src={{url_for('static', filename='js/game.js')}}></script>
+
 
 {% endblock %}
