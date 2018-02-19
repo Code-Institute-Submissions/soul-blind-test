@@ -33,7 +33,6 @@ The user can also view the leaderboard.
 - Nice to have: 
   - user experience: 
     - accept answers that are 80% correct
-    - automatically go to the next song after 30 seconds 
   - Contact form: send me an email
  
 ## Tech Used
