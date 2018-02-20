@@ -151,12 +151,12 @@ footer.footer {
 
 .landing-page h1{
     color: #e5c09e;
-    margin-top:5%;
+    margin-top:10%;
 }
 
 .landing-page form{
     color: #e5c09e;
-    margin-bottom:10%;
+    margin-bottom:14%;
 }
 
 .home-form {
@@ -185,6 +185,11 @@ footer.footer {
 .playing-area h4{
     color:#e5c09e;
     text-align:center;
+    margin-bottom:5px;
+}
+
+.playing-area span{
+    font-size:2em;
 }
 
 .playing-area audio{
@@ -197,6 +202,23 @@ footer.footer {
     min-width:60%;
 }
 
+.playing-area .instructions{
+    max-width:80%;
+    background-color:rgba(255,255,255,0.4);
+    padding:20px;
+    margin-top:20px;
+    text-align:center;
+}
+
+.playing-area .instructions h4{
+    color:#e87330;
+}
+
+.playing-area .instructions li{
+    font-size:0.8rem;
+    font-style: italic;
+    color:rgb(96, 102, 96);
+}
 
 /*Result Page*/
 

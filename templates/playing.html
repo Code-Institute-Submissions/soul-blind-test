@@ -6,13 +6,14 @@
   <div class='playing-area d-flex flex-column align-items-center justify-content-center flex-wrap'>
     <h1>Can you Guess ?</h1>
     <hr>
+    <h4>You have <span id="seconds">30</span> seconds left</h4>
     <h4>Round: {{current_round + 1}}/10</h4>
     <h4>Points: {{total_points}}</h4>
     <hr>
     <audio controls='controls' autoplay>
       <source src={{song}} />
     </audio>
-    <form method="POST">
+    <form method="POST" autocomplete="off">
       <div class="form-row">
         <div class="col-sm-12 col-md-6 	col-xl-5">
           <input type="text" class="form-control" placeholder="Enter the Artist's Name" name="artist">
@@ -26,11 +27,16 @@
       </div>
     </form>
     
+    <div class="instructions rounded">
+      <h4>How does it work:</h4>
+      <ul>
+        <li>*** You have 30 seconds to make enter your guess for the title, the artist or both ***</li>
+        <li>***To skip a song, click on submit ***</li>
+        <li>*** You'll get the result after 10 rounds***</li>
+      </ul>
+    </div>
   </div>
 </section>
-
-    <!-- Custom scripts for this template -->
-    <script src={{url_for('static', filename='js/game.js')}}></script>
 
 
 {% endblock %}
