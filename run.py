@@ -57,7 +57,12 @@ def select_songs():
     This functions selects the 10 random songs that the player will have to guess
     by creating an array of 10 random indexes. 
     '''
-    return [random.randint(0, len(songs_array)-1) for i in range(10)]
+    songs = []
+    while len(songs)<10:
+        i = random.randint(0, len(songs_array)-1)  
+        if i not in songs:
+            songs.append(i)
+    return songs
 
 def answer_is_correct(user_input, song_number, to_check):
     '''
@@ -296,7 +301,7 @@ def result(player_id):
     total_points = get_total_points(game_id)
     return render_template('result.html', player_id=player_id, result_data=result_data, total_points=total_points)
 
-@app.route("/contact/", methods=["GET", "POST"])
+@app.route("/contact/")
 def contact():
     return render_template('contact.html')
     
