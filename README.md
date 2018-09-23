@@ -1,59 +1,48 @@
 # The Vintage Blindtest
- 
-## Overview
 
-### What is this app for?
+This is a blind test game that allows you to test your knowledge of vintage soul songs.
  
-This is a blind test game that allows you to test your knowledge of vintage soul songs. 
+## UX
  
-### What does it do?
-It selects 10 random songs in a preselected playlist, and presents them to the user who can try to make a guess. 
+This website is obviously for people who like old soul songs, otherwise it may be hard to play. 
+The typical user would be a music lover who wants to try or prove his knowledge, or someone who likes this kind of music and wants to discover some songs.
 
-
-### How does it work
-1. the player enters his username 
-2. he is then redirected to the first page where he hears a 30 seconds extract from a randomly chosen song and can make a guess. If the guess is right, he gets some points (1 for correct title or correct artist, 3 points for both). 
-3. once the player makes a guess he is redirected to the next song x10 times 
-4. After 10 rounds,the player can see his overall result and the songs he got right. 
-The user can also view the leaderboard. 
+The mockups can be found [here](https://github.com/mathilde206/soul-blind-test/blob/master/Mockups%20Soul%20Blind%20Test.pdf)
 
 ## Features
-
+ 
 ### Existing Features
 
--General Features
-  - Use the API from spotify to create the songs data 
-  - Record users and their scores
-  - The game: show a random song, take guesses, calculate the points, keep track of the result
-  - The leaderboard: show the top ten players
-  - Contact form: send me an email 
+- Use the API from spotify to create the songs data ([get_songs.py](https://github.com/mathilde206/soul-blind-test/blob/master/data/get_songs.py))
+- Record users and their scores
+- The game: show a random song, take guesses, calculate the points, keep track of the result
+- The leaderboard: show the top ten players 
 
-### Features to Implement
+### Features Left to Implement
+- Accept answers that are 80% correct
+- Contact form: send me an email
 
-- Nice to have: 
-  - user experience: 
-    - accept answers that are 80% correct
-  - Contact form: send me an email
- 
-## Tech Used
-### Some the tech used includes:
+## Technologies Used
+
 - [Flask](http://flask.pocoo.org/)
     - I use **Flask** to handle page routing and other backend functions
 - [SQL Alchemy](https://www.sqlalchemy.org/) and [SQLite](https://www.sqlite.org) 
     - I use **SQL Alchemy** and **SQLite** for the database and db queries
+    - Note: the website is deployed on heroku with a SQLite database. SQLite databases are currently not supported by Heroku meaning that the data is deleted after a few hours.
 - [Bootstrap 4](http://getbootstrap.com/)
     - I use **Bootstrap** to give the project a simple, responsive layout
 - [Spotipy](http://spotipy.readthedocs.io/en/latest/)
     - I use **Spotipy** to get the data from Spotify.
- 
+
 
 ## Testing
 - The functions related to the database are tested in database_test.py
 - The other python functions are tested in tests.py
 - Documentation for the user testing can be found there : [User Tests](https://github.com/mathilde206/soul-blind-test/blob/master/user_testing.pdf)
 
-## Contributing
-### Getting the code up and running
+## Deployment
+
+### Local
 1. Firstly you will need to clone this repository by running the ```git clone https://github.com/mathilde206/soul-blind-test``` command
 2. Then you need to install all the dependencies from the requirements.txt file:
   ```
@@ -61,7 +50,13 @@ The user can also view the leaderboard.
 
   ```
 3. To start the application : ```python3 run.py```
-4. Make changes to the code and if you think it belongs in here then just submit a pull request
 
-### Add more songs 
-If you feel one artist is missing from the playlist and should be added in this game, feel free to ask me. 
+### Production
+The website is deployed on heroku at [vintage-blindtest.herokuapp.com](http://vintage-blindtest.herokuapp.com/)
+To deploy, I included two environment variables : IP: 0.0.0.0 and PORT: 5000
+
+## Credits
+
+### Media
+- The music extracts come from Spotify through spotipy.
+- The background image comes from Unsplash from Mr Cup / Fabien Barral on Unsplash (Free of rights)
