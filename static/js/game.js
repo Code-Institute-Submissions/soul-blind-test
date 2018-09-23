@@ -1,12 +1,10 @@
 setTimeout(function () {
     document.getElementById('submitGuess').click();
-}, 33000);
+}, 30000);
 
 let x = setInterval(function () {
     let currentSecs = $('#seconds').text();
-    console.log(currentSecs);
-    let newSecs = Number(currentSecs) - 1;
-    console.log(newSecs);
+    let newSecs = Number(currentSecs) > -1 ? Number(currentSecs) - 1: 0;
     $('#seconds').text(newSecs.toString());
 
 }, 1000);
