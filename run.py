@@ -320,11 +320,6 @@ def result(player_id):
         total_points=total_points)
 
 
-@app.route("/contact/")
-def contact():
-    return render_template('contact.html')
-
-
 @app.route("/leaderboard/")
 def leaderboard():
     all_users_ids = get_all_users()
