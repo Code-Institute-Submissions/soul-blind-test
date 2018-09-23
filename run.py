@@ -67,17 +67,17 @@ def select_songs():
 
 
 def answer_is_correct(user_input, song_number, to_check):
-    '''
+    """
     This function takes a song number and verifies if the user input corresponds to the song's title
-    '''
+    """
     return user_input.lower() == songs_array[song_number][to_check].lower()
 
 
 def calculate_points(song_number, title_input, artist_input):
-    '''
+    """
     This function takes the user's responses for artist and title and a song number 
     and counts the points won by the player depending of if he's right or wrong.
-    '''
+    """
 
     # Handle the case when the user doesn't answer one or two fields
     if not title_input:
@@ -98,33 +98,33 @@ def calculate_points(song_number, title_input, artist_input):
 
 # Functions to interact with the database
 def create_a_player(username):
-    '''
+    """
     This function adds a new user to the database
-    '''
+    """
     db.session.add(Player(username))
     db.session.commit()
 
 
 def add_game(player_id):
-    '''
+    """
     This function adds a new game associated with a player_id
-    '''
+    """
     db.session.add(Game_with_Players(player_id, 0))
     db.session.commit()
 
 
 def get_player_id(player):
-    '''
+    """
     This function returns the player's id in the database
-    '''
+    """
     return Player.query.filter_by(username=player).first().id
 
 
 def get_game_id(player_id):
-    '''
+    """
     This function gets the id of the current game, which is the last game in the db associated by
     the user
-    '''
+    """
     return Game_with_Players.query.filter_by(player=player_id).all()[-1].id
 
 
