@@ -1,45 +1,49 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
-<section class="container-fluid swirling-background d-flex">
-    <div class="result-area row justify-content-md-center align-items-center">
-        <div class='col-12 col-md-7 user-score d-flex flex-column'>
-                
-            {% if total_points==0 %}
-                <h2 class='text-danger'>Ouch... You need some more training</h2>
-            {% elif total_points<10 %}
-                <h2 class='text-warning bg-light border border-warning rounded'>You should try again...</h2>
-            {% elif total_points<20 %}
-                <h2 class='text-success'>Awesome!</h2>
-            {% elif total_points>20 %}
-                <h2 class='text-success'>You're the best !</h2>
-            {% endif %}
-            
-            <h3>Number of points: <span>{{total_points}}<span></h3>
-            
-            <a href="{{url_for('leaderboard')}}"><button class='btn btn-lg btn-result'>Go to the Leader Board</button></a>
-            <a href="{{url_for('index')}}"><button class='btn btn-lg btn-result'>Play Again</button></a>
-            
-        </div>
-        <div class='col-xs-12 col-md-6'>
-            <ul class="list-group rounded">
-                {% for song in result_data %}
-                
-                <li class="list-group-item {% if song.points > 0 %}list-group-item-success{% endif %}">
-                    <div class='media'>
-                        <img class="d-flex mr-3" src="{{song.album_img}}" alt="{{'album from {}'.format(song.artist)}}">
-                        <div class="media-body">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1">{{song.title}}</h5>
-                                <small>{{song.points}} points</small>
+    <section class="container-fluid swirling-background d-flex">
+        <div class="result-area row justify-content-md-center align-items-center">
+            <div class='col-12 col-md-7 user-score d-flex flex-column'>
+
+                {% if total_points==0 %}
+                    <h2 class='text-danger'>Ouch... You need some more training</h2>
+                {% elif total_points<10 %}
+                    <h2 class='text-warning bg-light border border-warning rounded'>You should try again...</h2>
+                {% elif total_points<20 %}
+                    <h2 class='text-success'>Awesome!</h2>
+                {% elif total_points>20 %}
+                    <h2 class='text-success'>You're the best !</h2>
+                {% endif %}
+
+                <h3>Number of points: <span>{{ total_points }}<span></h3>
+
+                <a href="{{ url_for('leaderboard') }}">
+                    <button class='btn btn-lg btn-result'>Go to the Leader Board</button>
+                </a>
+                <a href="{{ url_for('index') }}">
+                    <button class='btn btn-lg btn-result'>Play Again</button>
+                </a>
+
+            </div>
+            <div class='col-xs-12 col-md-6'>
+                <ul class="list-group rounded">
+                    {% for song in result_data %}
+
+                        <li class="list-group-item {% if song.points > 0 %}list-group-item-success{% endif %}">
+                            <div class='media'>
+                                <img class="d-flex mr-3" src="{{ song.album_img }}" alt="{{ 'album from {}'.format(song.artist) }}">
+                                <div class="media-body">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">{{ song.title }}</h5>
+                                            <small>{{ song.points }} points</small>
+                                    </div>
+                                    <p>{{ song.artist }}</p>
+                                </div>
                             </div>
-                            <p>{{song.artist}}</p>
-                        </div>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-</section>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+    </section>
 
 {% endblock %}
